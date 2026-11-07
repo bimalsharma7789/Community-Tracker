@@ -1,0 +1,562 @@
+/* ==========================================================================
+   style.css - Community Meeting Decision Tracker
+   Strictly Vanilla CSS3.
+
+   Design System Specifications:
+   - Primary Font: "Inter", sans-serif (Google Fonts) with optical sizing auto
+   - Golden Ratio Scale: 1.68 (applied to typography hierarchy & spatial layout)
+   - Color Palette:
+       * Royal Blue: #10367D (Primary brand, main titles, primary buttons)
+       * Light Grey: #EBEBEB (Neutral surfaces, borders, table headers)
+       * Sky Blue:   #74B4D9 (Accents, active tab highlights, hover states)
+   - Card Styling: Solid clean cards with subtle neutral borders.
+                   NO colored border lines (no red, blue, green stripes).
+   - Shadows: Strictly box-shadow: none !important everywhere.
+   - Emojis: Zero emojis across all elements.
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+
+/* --------------------------------------------------------------------------
+   1. Design Tokens & Golden Ratio (1.68) Calculations
+   -------------------------------------------------------------------------- */
+:root {
+  /* Color Palette */
+  --color-primary: #10367D;
+  --color-primary-hover: #0b2659;
+  --color-accent: #74B4D9;
+  --color-accent-hover: #5ca4ce;
+  --color-bg: #f8fafc;
+  --color-card-bg: #ffffff;
+  --color-neutral-grey: #EBEBEB;
+  --color-border: #EBEBEB;
+  --color-border-dark: #cbd5e1;
+
+  --color-text-main: #1e293b;
+  --color-text-secondary: #64748b;
+  --color-text-inverse: #ffffff;
+
+  /* Status Colors (flat, minimal) */
+  --status-red-bg: #fef2f2;
+  --status-red-text: #991b1b;
+  --status-red-border: #fca5a5;
+
+  --status-yellow-bg: #fffbeb;
+  --status-yellow-text: #92400e;
+  --status-yellow-border: #fde68a;
+
+  --status-green-bg: #f0fdf4;
+  --status-green-text: #166534;
+  --status-green-border: #bbf7d0;
+
+  --status-blue-bg: #f0f7fc;
+  --status-blue-text: #10367D;
+  --status-blue-border: #74B4D9;
+
+  --status-grey-bg: #EBEBEB;
+  --status-grey-text: #475569;
+  --status-grey-border: #cbd5e1;
+
+  /* Typography: Golden Ratio (1.68) Hierarchy
+     Base Body Font = 16px (1.00rem)
+     Secondary Font = 16px / 1.68 = ~9.5px - 13.5px (0.84rem)
+     H3 Subheadings = ~20px (1.25rem)
+     H2 Card Headings = 16px * 1.68 = 26.88px (~1.68rem)
+     H1 Main Heading = 26.88px * 1.68 = 45.16px (~2.82rem)
+     Stat Numbers = 26.88px * 1.68 = 45.16px (~2.82rem)
+  */
+  --font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-size-xs: 0.70rem;         /* ~11px */
+  --font-size-secondary: 0.84rem;  /* ~13.5px (Secondary font) */
+  --font-size-base: 1.00rem;       /* 16px (Primary body font) */
+  --font-size-h3: 1.25rem;         /* ~20px (Sub-section headings) */
+  --font-size-h2: 1.68rem;         /* 26.88px (Primary card heading: 1.00rem * 1.68) */
+  --font-size-h1: 2.82rem;         /* 45.16px (Page main title: 1.68rem * 1.68) */
+  --font-size-stat: 2.82rem;       /* 45.16px (Key metrics display: 1.68rem * 1.68) */
+
+  /* Golden Ratio (1.68) Spacing Scale
+     Base Space = 16px
+     Space XS = 10px / 1.68 = ~6px
+     Space SM = 16px / 1.68 = ~10px
+     Space Base = 16px
+     Space MD = 16px * 1.68 = ~27px (Card padding, section gap)
+     Space LG = 27px * 1.68 = ~45px (Page header spacing, section margins)
+     Space XL = 45px * 1.68 = ~76px
+  */
+  --space-xs: 6px;
+  --space-sm: 10px;
+  --space-base: 16px;
+  --space-md: 27px;
+  --space-lg: 45px;
+  --space-xl: 76px;
+
+  --radius-sm: 4px;
+  --radius-md: 6px;
+}
+
+/* --------------------------------------------------------------------------
+   2. Reset & Universal Zero-Shadow Rule
+   -------------------------------------------------------------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-family);
+  font-optical-sizing: auto;
+  box-shadow: none !important;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text-main);
+  font-family: var(--font-family);
+  font-optical-sizing: auto;
+  font-size: var(--font-size-base);
+  line-height: 1.5;
+  min-height: 100vh;
+}
+
+/* --------------------------------------------------------------------------
+   3. Top Navigation Bar
+   -------------------------------------------------------------------------- */
+.navbar {
+  background-color: var(--color-primary);
+  color: var(--color-text-inverse);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-base) var(--space-md);
+  border-bottom: 3px solid var(--color-accent);
+}
+
+.navbar .brand {
+  font-size: var(--font-size-h3);
+  font-weight: 700;
+  color: var(--color-text-inverse);
+  text-decoration: none;
+  letter-spacing: 0.5px;
+}
+
+.navbar .nav-links {
+  list-style: none;
+  display: flex;
+  gap: var(--space-sm);
+}
+
+.navbar .nav-links a {
+  color: var(--color-neutral-grey);
+  text-decoration: none;
+  font-size: var(--font-size-secondary);
+  font-weight: 500;
+  padding: var(--space-xs) var(--space-base);
+  border-radius: var(--radius-sm);
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.navbar .nav-links a:hover {
+  background-color: var(--color-accent);
+  color: var(--color-primary);
+}
+
+.navbar .nav-links a.active {
+  background-color: var(--color-accent);
+  color: var(--color-primary);
+  font-weight: 700;
+}
+
+/* --------------------------------------------------------------------------
+   4. Page Container & Header (Golden Ratio Spacing)
+   -------------------------------------------------------------------------- */
+.container {
+  max-width: 1080px;
+  margin: var(--space-md) auto;
+  padding: 0 var(--space-base);
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: var(--space-md);
+  flex-wrap: wrap;
+  gap: var(--space-base);
+}
+
+.page-header h1 {
+  font-size: var(--font-size-h1);
+  font-weight: 800;
+  color: var(--color-primary);
+  line-height: 1.15;
+  margin-bottom: var(--space-xs);
+}
+
+.page-header p {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-secondary);
+  line-height: 1.5;
+}
+
+/* --------------------------------------------------------------------------
+   5. Cards (Solid, Uniform, Clean - Zero Colored Border Lines)
+   -------------------------------------------------------------------------- */
+.card {
+  background: var(--color-card-bg);
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+  margin-bottom: var(--space-md);
+  border: 1px solid var(--color-border);
+  box-shadow: none !important;
+}
+
+.card h2 {
+  font-size: var(--font-size-h2);
+  font-weight: 700;
+  color: var(--color-primary);
+  margin-bottom: var(--space-sm);
+  line-height: 1.25;
+}
+
+.card h3 {
+  font-size: var(--font-size-h3);
+  font-weight: 700;
+  color: var(--color-primary);
+  margin-bottom: var(--space-sm);
+  line-height: 1.3;
+}
+
+.card h4 {
+  font-size: var(--font-size-base);
+  font-weight: 600;
+  color: var(--color-primary);
+  margin-bottom: var(--space-xs);
+}
+
+/* --------------------------------------------------------------------------
+   6. Metric Stats Grid (Golden Ratio Typography & Spacing)
+   -------------------------------------------------------------------------- */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--space-base);
+  margin-bottom: var(--space-md);
+}
+
+/* All stat cards have identical, clean solid borders - NO red/blue/green top lines */
+.stat-card {
+  background: var(--color-card-bg);
+  border-radius: var(--radius-md);
+  padding: var(--space-base) var(--space-md);
+  border: 1px solid var(--color-border);
+  box-shadow: none !important;
+}
+
+.stat-card .stat-title {
+  font-size: var(--font-size-xs);
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--color-text-secondary);
+  letter-spacing: 0.5px;
+}
+
+.stat-card .stat-value {
+  font-size: var(--font-size-stat);
+  font-weight: 800;
+  color: var(--color-primary);
+  margin-top: var(--space-xs);
+  line-height: 1.1;
+}
+
+/* --------------------------------------------------------------------------
+   7. Alert Boxes (Solid, Minimalist)
+   -------------------------------------------------------------------------- */
+.alert-box {
+  padding: var(--space-base) var(--space-md);
+  border-radius: var(--radius-sm);
+  margin-bottom: var(--space-base);
+  font-size: var(--font-size-secondary);
+}
+
+.alert-danger {
+  background-color: var(--status-red-bg);
+  border: 1px solid var(--status-red-border);
+  color: var(--status-red-text);
+}
+
+.alert-warning {
+  background-color: var(--status-yellow-bg);
+  border: 1px solid var(--status-yellow-border);
+  color: var(--status-yellow-text);
+}
+
+.alert-info {
+  background-color: var(--status-blue-bg);
+  border: 1px solid var(--status-blue-border);
+  color: var(--status-blue-text);
+}
+
+/* --------------------------------------------------------------------------
+   8. Buttons (Solid Colors, Zero Shadows)
+   -------------------------------------------------------------------------- */
+.btn {
+  display: inline-block;
+  padding: var(--space-sm) var(--space-base);
+  font-size: var(--font-size-secondary);
+  font-weight: 600;
+  border-radius: var(--radius-sm);
+  border: 1px solid transparent;
+  cursor: pointer;
+  text-decoration: none;
+  box-shadow: none !important;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+  font-family: var(--font-family);
+}
+
+.btn-primary {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+  color: var(--color-text-inverse);
+}
+
+.btn-primary:hover {
+  background-color: var(--color-primary-hover);
+  border-color: var(--color-primary-hover);
+}
+
+.btn-secondary {
+  background-color: var(--color-accent);
+  border-color: var(--color-accent);
+  color: var(--color-primary);
+}
+
+.btn-secondary:hover {
+  background-color: var(--color-accent-hover);
+  border-color: var(--color-accent-hover);
+}
+
+.btn-success {
+  background-color: #15803d;
+  border-color: #15803d;
+  color: var(--color-text-inverse);
+}
+
+.btn-success:hover {
+  background-color: #166534;
+}
+
+.btn-danger {
+  background-color: #b91c1c;
+  border-color: #b91c1c;
+  color: var(--color-text-inverse);
+}
+
+.btn-danger:hover {
+  background-color: #991b1b;
+}
+
+.btn-outline {
+  background-color: transparent;
+  border: 1px solid var(--color-primary);
+  color: var(--color-primary);
+}
+
+.btn-outline:hover {
+  background-color: var(--color-neutral-grey);
+}
+
+.btn-sm {
+  padding: var(--space-xs) var(--space-sm);
+  font-size: var(--font-size-xs);
+}
+
+/* --------------------------------------------------------------------------
+   9. Forms & Inputs
+   -------------------------------------------------------------------------- */
+.form-group {
+  margin-bottom: var(--space-base);
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: var(--space-xs);
+  font-size: var(--font-size-secondary);
+  font-weight: 600;
+  color: var(--color-text-main);
+}
+
+.form-control {
+  width: 100%;
+  padding: var(--space-sm) var(--space-base);
+  font-size: var(--font-size-base);
+  border: 1px solid #cbd5e1;
+  border-radius: var(--radius-sm);
+  background-color: #ffffff;
+  color: var(--color-text-main);
+  outline: none;
+  box-shadow: none !important;
+  font-family: var(--font-family);
+}
+
+.form-control:focus {
+  border-color: var(--color-primary);
+  outline: 1px solid var(--color-primary);
+}
+
+.form-row {
+  display: flex;
+  gap: var(--space-base);
+  flex-wrap: wrap;
+}
+
+.form-row .form-group {
+  flex: 1;
+  min-width: 180px;
+}
+
+/* --------------------------------------------------------------------------
+   10. Tables
+   -------------------------------------------------------------------------- */
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--font-size-secondary);
+  background: #ffffff;
+}
+
+table th, table td {
+  padding: var(--space-sm) var(--space-base);
+  text-align: left;
+  border-bottom: 1px solid var(--color-border);
+}
+
+table th {
+  background-color: var(--color-neutral-grey);
+  color: var(--color-primary);
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: var(--font-size-xs);
+  letter-spacing: 0.5px;
+}
+
+table tr:hover {
+  background-color: #f8fafc;
+}
+
+/* --------------------------------------------------------------------------
+   11. Status Badges
+   -------------------------------------------------------------------------- */
+.badge {
+  display: inline-block;
+  padding: 3px 8px;
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  border-radius: 3px;
+  text-transform: capitalize;
+}
+
+.badge-overdue {
+  background-color: var(--status-red-bg);
+  color: var(--status-red-text);
+  border: 1px solid var(--status-red-border);
+}
+
+.badge-pending,
+.badge-in-progress {
+  background-color: var(--status-yellow-bg);
+  color: var(--status-yellow-text);
+  border: 1px solid var(--status-yellow-border);
+}
+
+.badge-completed {
+  background-color: var(--status-green-bg);
+  color: var(--status-green-text);
+  border: 1px solid var(--status-green-border);
+}
+
+.badge-scheduled {
+  background-color: var(--status-blue-bg);
+  color: var(--status-blue-text);
+  border: 1px solid var(--status-blue-border);
+}
+
+.badge-cancelled {
+  background-color: var(--status-grey-bg);
+  color: var(--status-grey-text);
+  border: 1px solid var(--status-grey-border);
+}
+
+/* --------------------------------------------------------------------------
+   12. Tabs Navigation
+   -------------------------------------------------------------------------- */
+.tab-nav {
+  display: flex;
+  border-bottom: 2px solid var(--color-border);
+  margin-bottom: var(--space-md);
+  gap: var(--space-xs);
+}
+
+.tab-btn {
+  background: var(--color-neutral-grey);
+  border: 1px solid var(--color-border);
+  border-bottom: none;
+  padding: var(--space-sm) var(--space-base);
+  font-size: var(--font-size-secondary);
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+  transition: background-color 0.15s ease, color 0.15s ease;
+  font-family: var(--font-family);
+}
+
+.tab-btn:hover {
+  color: var(--color-primary);
+  background-color: #dce5ef;
+}
+
+.tab-btn.active {
+  background-color: #ffffff;
+  color: var(--color-primary);
+  border-top: 2px solid var(--color-primary);
+  border-left: 1px solid var(--color-border);
+  border-right: 1px solid var(--color-border);
+  border-bottom: 2px solid #ffffff;
+  margin-bottom: -2px;
+  font-weight: 700;
+}
+
+.tab-content {
+  display: none;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+/* --------------------------------------------------------------------------
+   13. Utility Classes (Spacing based on Golden Ratio 1.68)
+   -------------------------------------------------------------------------- */
+.d-flex { display: flex; }
+.justify-between { justify-content: space-between; }
+.align-center { align-items: center; }
+.gap-8 { gap: var(--space-xs); }
+.gap-12 { gap: var(--space-sm); }
+.mt-12 { margin-top: var(--space-sm); }
+.mt-20 { margin-top: var(--space-base); }
+.mb-12 { margin-bottom: var(--space-sm); }
+.text-muted { color: var(--color-text-secondary); font-size: var(--font-size-secondary); }
+
+.empty-state {
+  text-align: center;
+  padding: var(--space-lg) var(--space-base);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-secondary);
+}

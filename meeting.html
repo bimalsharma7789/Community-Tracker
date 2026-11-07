@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meeting Detail - Community Meeting Decision Tracker</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Top Navigation Bar -->
+    <div id="navbar-container"></div>
+
+    <div class="container">
+        <!-- Back link -->
+        <div class="mb-12">
+            <a href="meetings.html" class="btn btn-outline btn-sm">&larr; Back to Meetings</a>
+        </div>
+
+        <!-- Meeting Header Card -->
+        <div class="card" id="meeting-header-card">
+            <div class="d-flex justify-between align-center flex-wrap gap-12">
+                <div>
+                    <h1 id="meeting-title-display">Meeting Details</h1>
+                    <p class="text-muted mt-12" id="meeting-meta-display">Loading meeting information...</p>
+                </div>
+                <div id="meeting-status-container" class="d-flex align-center gap-8">
+                    <!-- Status badge and status changer -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Tabs Navigation -->
+        <div class="tab-nav">
+            <button class="tab-btn active" onclick="switchTab('agenda')">1. Agenda</button>
+            <button class="tab-btn" onclick="switchTab('attendance')">2. Attendance</button>
+            <button class="tab-btn" onclick="switchTab('minutes')">3. Minutes</button>
+            <button class="tab-btn" onclick="switchTab('decisions')">4. Decisions and Actions</button>
+        </div>
+
+        <!-- TAB 1: AGENDA -->
+        <div id="tab-agenda" class="tab-content active">
+            <div class="card">
+                <h3>Agenda Items</h3>
+                <p class="text-muted mb-12">Add topics to be discussed during this meeting.</p>
+                
+                <form id="agenda-form" class="mb-12">
+                    <div class="form-row">
+                        <div class="form-group" style="flex: 3;">
+                            <input type="text" id="agenda-text" class="form-control" placeholder="Enter new agenda topic..." required>
+                        </div>
+                        <div class="form-group" style="flex: 1;">
+                            <button type="submit" class="btn btn-primary" style="width: 100%;">+ Add Topic</button>
+                        </div>
+                    </div>
+                </form>
+
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th style="width: 60px;">#</th>
+                                <th>Agenda Item</th>
+                                <th style="width: 100px;">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="agenda-table-body">
+                            <!-- Populated by js/meeting.js -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 2: ATTENDANCE -->
+        <div id="tab-attendance" class="tab-content">
+            <div class="card">
+                <div class="d-flex justify-between align-center mb-12">
+                    <div>
+                        <h3>Resident Attendance</h3>
+                        <p class="text-muted">Mark attendance for all registered community residents.</p>
+                    </div>
+                    <button onclick="saveAttendance()" class="btn btn-success">Save Attendance</button>
+                </div>
+
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Resident Name</th>
+                                <th>Flat Number</th>
+                                <th>Attendance Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="attendance-table-body">
+                            <!-- Populated by js/meeting.js -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 3: MINUTES -->
+        <div id="tab-minutes" class="tab-content">
+            <div class="card">
+                <h3>Meeting Minutes</h3>
+                <p class="text-muted mb-12">Write a clear summary of discussions, resident opinions, and official notes.</p>
+                
+                <form id="minutes-form">
+                    <div class="form-group">
+                        <textarea id="meeting-minutes" class="form-control" rows="10" placeholder="Type minutes of the meeting here..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Save Minutes</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- TAB 4: DECISIONS & ACTIONS -->
+        <div id="tab-decisions" class="tab-content">
+            <!-- Add Decision Card -->
+            <div class="card">
+                <h3>Record a Decision</h3>
+                <p class="text-muted mb-12">Record an official decision made during the meeting, optionally linking it to an agenda item.</p>
+                
+                <form id="decision-form">
+                    <div class="form-row">
+                        <div class="form-group" style="flex: 2;">
+                            <label for="decision-text">Decision Description *</label>
+                            <input type="text" id="decision-text" class="form-control" placeholder="e.g. Repair water pump by end of next week" required>
+                        </div>
+                        <div class="form-group" style="flex: 1;">
+                            <label for="decision-agenda-link">Linked Agenda Topic (Optional)</label>
+                            <select id="decision-agenda-link" class="form-control">
+                                <option value="">-- None / General --</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">+ Record Decision</button>
+                </form>
+            </div>
+
+            <!-- Decisions & Assigned Actions List -->
+            <div id="decisions-list-container">
+                <!-- Rendered dynamically by js/meeting.js -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/storage.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/meeting.js"></script>
+</body>
+</html>

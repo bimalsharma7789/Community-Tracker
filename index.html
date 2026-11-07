@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Community Meeting Decision Tracker</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Top Navigation Bar -->
+    <div id="navbar-container"></div>
+
+    <div class="container">
+        <!-- Dashboard Header & Demo Buttons -->
+        <div class="page-header">
+            <div>
+                <h1>Community Dashboard</h1>
+                <p>Overview of society meetings, pending decisions, and upcoming deadlines.</p>
+            </div>
+            <div class="d-flex gap-8">
+                <button onclick="handleLoadSample()" class="btn btn-outline">Load Sample Data</button>
+                <button onclick="handleClearData()" class="btn btn-danger">Clear All Data</button>
+            </div>
+        </div>
+
+        <!-- Metric Counter Cards -->
+        <div class="stats-grid">
+            <div class="stat-card stat-upcoming">
+                <div class="stat-title">Upcoming Meetings</div>
+                <div class="stat-value" id="count-upcoming">0</div>
+            </div>
+            <div class="stat-card stat-open">
+                <div class="stat-title">Open Actions</div>
+                <div class="stat-value" id="count-open">0</div>
+            </div>
+            <div class="stat-card stat-overdue">
+                <div class="stat-title">Overdue Actions</div>
+                <div class="stat-value" id="count-overdue">0</div>
+            </div>
+            <div class="stat-card stat-completed">
+                <div class="stat-title">Completed Actions</div>
+                <div class="stat-value" id="count-completed">0</div>
+            </div>
+        </div>
+
+        <!-- Highlighted Reminders Section -->
+        <div class="card">
+            <h2>Priority Reminders & Deadlines</h2>
+            <p class="text-muted mb-12">Immediate attention required: actions that are overdue or due within the next 3 days.</p>
+
+            <!-- Overdue Actions Alert -->
+            <div id="overdue-container" class="mb-12">
+                <!-- Populated dynamically -->
+            </div>
+
+            <!-- Due in Next 3 Days Alert -->
+            <div id="due-soon-container" class="mb-12">
+                <!-- Populated dynamically -->
+            </div>
+        </div>
+
+        <!-- Upcoming Meetings in Next 7 Days -->
+        <div class="card">
+            <div class="d-flex justify-between align-center mb-12">
+                <h2>Meetings in the Next 7 Days</h2>
+                <a href="meetings.html" class="btn btn-outline btn-sm">Schedule Meeting</a>
+            </div>
+            <div id="upcoming-meetings-container">
+                <!-- Populated dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/storage.js"></script>
+    <script src="js/app.js"></script>
+    <script>
+        // Initialize dashboard when index.html is loaded
+        document.addEventListener('DOMContentLoaded', function () {
+            renderNavbar('dashboard');
+            initDashboard();
+        });
+
+        // Handler for loading sample data with confirmation
+        function handleLoadSample() {
+            if (confirm('Load demo sample data? This will populate initial sample meetings and actions.')) {
+                loadSampleData();
+                initDashboard();
+                alert('Sample data loaded successfully.');
+            }
+        }
+
+        // Handler for clearing all data with confirmation
+        function handleClearData() {
+            if (confirm('Are you sure you want to delete all data from localStorage? This cannot be undone.')) {
+                clearAllData();
+                initDashboard();
+                alert('All data has been cleared.');
+            }
+        }
+    </script>
+</body>
+</html>

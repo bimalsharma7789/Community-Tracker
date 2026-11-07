@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meetings and Residents - Community Meeting Decision Tracker</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Top Navigation Bar (injected by app.js) -->
+    <div id="navbar-container"></div>
+
+    <div class="container">
+        <div class="page-header">
+            <div>
+                <h1>Meetings and Residents</h1>
+                <p>Schedule new community meetings and manage resident members.</p>
+            </div>
+        </div>
+
+        <!-- Meeting Scheduling Section -->
+        <div class="card">
+            <h2>Schedule a New Meeting</h2>
+            <form id="meeting-form">
+                <div class="form-row">
+                    <div class="form-group" style="flex: 2;">
+                        <label for="meeting-title">Meeting Title *</label>
+                        <input type="text" id="meeting-title" class="form-control" placeholder="e.g. Monthly Maintenance Review" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="meeting-status">Status *</label>
+                        <select id="meeting-status" class="form-control" required>
+                            <option value="Scheduled" selected>Scheduled</option>
+                            <option value="Completed">Completed</option>
+                            <option value="Cancelled">Cancelled</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="meeting-date">Date *</label>
+                        <input type="date" id="meeting-date" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="meeting-time">Time *</label>
+                        <input type="time" id="meeting-time" class="form-control" required>
+                    </div>
+                    <div class="form-group" style="flex: 2;">
+                        <label for="meeting-venue">Venue / Location *</label>
+                        <input type="text" id="meeting-venue" class="form-control" placeholder="e.g. Clubhouse Hall or Block B Lobby" required>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Schedule Meeting</button>
+            </form>
+        </div>
+
+        <!-- Upcoming / Scheduled Meetings List -->
+        <div class="card">
+            <div class="d-flex justify-between align-center mb-12">
+                <h2>Upcoming and Active Meetings</h2>
+                <span class="text-muted" id="meeting-count">0 meetings</span>
+            </div>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Date</th>
+                            <th>Time</th>
+                            <th>Venue</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="meetings-table-body">
+                        <!-- Populated by js/meetings.js -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Resident Management Section -->
+        <div class="card">
+            <h2>Community Residents Directory</h2>
+            <p class="text-muted mb-12">Manage residents eligible for meeting attendance and task assignments.</p>
+
+            <form id="resident-form" class="mb-12">
+                <div class="form-row">
+                    <div class="form-group" style="flex: 2;">
+                        <label for="resident-name">Resident Name *</label>
+                        <input type="text" id="resident-name" class="form-control" placeholder="e.g. Rajesh Kumar" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="resident-flat">Flat / Unit Number *</label>
+                        <input type="text" id="resident-flat" class="form-control" placeholder="e.g. A-402" required>
+                    </div>
+                    <div class="form-group" style="display: flex; align-items: flex-end;">
+                        <button type="submit" class="btn btn-success" style="width: 100%;">+ Add Resident</button>
+                    </div>
+                </div>
+            </form>
+
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Flat Number</th>
+                            <th>Assigned Actions</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="residents-table-body">
+                        <!-- Populated by js/meetings.js -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/storage.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/meetings.js"></script>
+</body>
+</html>
